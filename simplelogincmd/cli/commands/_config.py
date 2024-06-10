@@ -7,6 +7,9 @@ def _display_config_value(key, value):
     if key == "api.api-key":
         # Obscure for security.
         value = "*" * 20
+    elif isinstance(value, bool):
+        # Display in lowercase.
+        value = "true" if value else "false"
     click.echo(f"{key} = {value}")
 
 
