@@ -39,6 +39,9 @@ CONFIG_SCHEMA = {
                     "type": "integer",
                     "minimum": 0,
                 },
+                "headers": {
+                    "type": "boolean",
+                },
             },
         },
     },
@@ -50,5 +53,6 @@ CONFIG_BASE = {
     },
     "display": {
         "pager-threshold": 20,
+        "headers": True,
     },
 }

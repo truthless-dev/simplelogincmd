@@ -22,8 +22,19 @@ from simplelogincmd.cli import const
     "--exclude",
     help=const.HELP.ALIAS.ACTIVITY.OPTION.EXCLUDE,
 )
-def activity(id: str, include: str | None, exclude: str | None) -> None:
+@click.option(
+    "--header/--no-header",
+    "header",
+    default=None,
+    help=const.HELP.ALIAS.ACTIVITY.OPTION.HEADER,
+)
+def activity(
+    id: str,
+    include: str | None,
+    exclude: str | None,
+    header: bool | None,
+) -> None:
     """Display alias activities in a tabular format"""
     from simplelogincmd.cli.commands.alias_commands._activity import _activity
 
-    return _activity(id, include, exclude)
+    return _activity(id, include, exclude, header)

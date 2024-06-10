@@ -18,7 +18,7 @@ def _mailbox_sort_key(mailbox: Mailbox) -> tuple[int, str]:
     return (mailbox.nb_alias * -1, mailbox.email)
 
 
-def _list(include, exclude):
+def _list(include, exclude, header):
     fields = output.get_display_fields_from_options(
         const.MAILBOX_FIELD_ORDER, include, exclude
     )
@@ -34,4 +34,11 @@ def _list(include, exclude):
     for mailbox in mailboxes:
         db.session.upsert(mailbox)
     db.session.commit()
-    output.display_model_list(mailboxes, fields, pager_threshold=0)
+    if header is None:
+        header = cfg.get("display.headers")
+    output.display_model_list(
+        mailboxes,
+        fields,
+        pager_threshold=0,
+        header=header,
+    )
