@@ -642,3 +642,21 @@ class SimpleLogin:
         if not success:
             return success, json.get("error", "Failed to delete contact")
         return success, None
+
+    def toggle_contact(self, contact_id: int) -> tuple[bool, bool | str]:
+        """
+        Block or unblock a contact
+
+        See the Simplelogin documentation for an explanation of the
+        parameters.
+
+        :return: Whether the toggle succeeded, and the contact's new
+            state or an error message, as appropriate
+        :rtype: tuple[bool, bool | str]
+        """
+        endpoint = const.ENDPOINT.CONTACT_TOGGLE.format(contact_id=contact_id)
+        headers = self._auth_headers()
+        success, json = self.client.post(endpoint, headers=headers)
+        if not success:
+            return success, json.get("error", "Failed to toggle contact")
+        return success, json.get("block_forward")

@@ -202,6 +202,11 @@ HELP = NS(
                     HEADER=_HELP_OPTION_HEADER,
                 ),
             ),
+            TOGGLE=NS(
+                SHORT="Block and unblock a contact",
+                LONG="Block or unblock the contact with the given "
+                f"ID. {_HELP_CONTACT_ID}",
+            ),
         ),
         CUSTOM=NS(
             SHORT=None,

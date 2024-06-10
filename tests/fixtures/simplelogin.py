@@ -352,3 +352,24 @@ def sl_contact_delete_failure():
     return dict(
         error="Forbidden",
     )
+
+
+@pytest.fixture
+def sl_contact_enabled():
+    return dict(
+        block_forward=False,
+    )
+
+
+@pytest.fixture
+def sl_contact_disabled():
+    return dict(
+        block_forward=True,
+    )
+
+
+@pytest.fixture
+def sl_contact_toggle_failure():
+    return dict(
+        error="Forbidden",
+    )

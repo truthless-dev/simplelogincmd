@@ -73,3 +73,8 @@ def url_alias_contacts(url_base):
 @pytest.fixture(scope="session")
 def url_contact(url_base):
     return urljoin(url_base, const.ENDPOINT.CONTACT)
+
+
+@pytest.fixture(scope="session")
+def url_contact_toggle(url_base):
+    return urljoin(url_base, const.ENDPOINT.CONTACT_TOGGLE)

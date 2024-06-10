@@ -323,3 +323,26 @@ class TestContactEndpoints:
         success, msg = sl.delete_contact(contact_id=sl_contact_a["id"])
         assert success is False
         assert isinstance(msg, str)
+
+    @responses.activate
+    def test_enable_valid(self, sl, sl_contact_a, resp_contact_enabled):
+        responses.add(resp_contact_enabled)
+        success, result = sl.toggle_contact(contact_id=sl_contact_a["id"])
+        assert success is True
+        # `False` indicates not blocked (i.e., enabled).
+        assert result is False
+
+    @responses.activate
+    def test_disable_valid(self, sl, sl_contact_a, resp_contact_disabled):
+        responses.add(resp_contact_disabled)
+        success, result = sl.toggle_contact(contact_id=sl_contact_a["id"])
+        assert success is True
+        # `True` indicates blocked (i.e., disabled).
+        assert result is True
+
+    @responses.activate
+    def test_toggle_invalid(self, sl, sl_contact_a, resp_contact_toggle_failure):
+        responses.add(resp_contact_toggle_failure)
+        success, result = sl.toggle_contact(contact_id=sl_contact_a["id"])
+        assert success is False
+        assert isinstance(result, str)
