@@ -6,20 +6,20 @@ def edit(msg: str | None = None, *args, **kwargs) -> str | None:
     Allow the user to enter a message via their editor of choice
 
     :param message: Default message to show in the temporary file. If
-        not given, :data:`~simplelogincmd.cli.const.EDITOR_DEFAULT_MESSAGE`
+        not given, :attr:`~simplelogincmd.cli.const.EDITOR_DEFAULT_MESSAGE`
         is used, defaults to None
     :type message: str, optional
     :param args: Passed directly on to :func:`click.edit`
     :param kwargs: Passed directly on to :func:`click.edit`
 
-    :return: The message entered, with all blank and commented lines
-        removed, or None if the user enters a blank message
+    :return: The message entered, with all commented lines removed,
+        or None if the user enters a blank message
     :rtype: str|None
     """
-    msg = msg or (
-        "\n\n# Provide your message above. Any line starting with "
-        "\n# a `#` will be ignored. "
-    )
+    if msg is None:
+        from simplelogincmd.cli import const
+
+        msg = const.EDITOR_DEFAULT_MESSAGE
     text = click.edit(msg, *args, **kwargs)
     if text is None:
         return text
@@ -27,7 +27,7 @@ def edit(msg: str | None = None, *args, **kwargs) -> str | None:
     text = []
     for line in lines:
         stripped_line = line.strip()
-        if stripped_line != "" and stripped_line[0] != "#":
+        if len(stripped_line) == 0 or stripped_line[0] != "#":
             text.append(line)
     return "\n".join(text)
 
