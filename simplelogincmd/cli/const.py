@@ -5,6 +5,10 @@ CLI constants
 from types import SimpleNamespace as NS
 
 
+EDITOR_DEFAULT_MESSAGE = (
+    "\n\n# Provide your message above. Any line starting with "
+    "\n# a `#` will be ignored. "
+)
 EXIT_CODE = NS(
     # Start with high value to avoid clash with possible future Click codes.
     NOT_LOGGED_IN=100,
