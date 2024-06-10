@@ -296,14 +296,11 @@ class SimpleLogin:
         params = dict(
             page_id=page_id,
         )
-        body = None
         if query is not None:
             query = query.lower()
             if query in const.ALIAS_FILTERS:
-                body = {"query": query}
-        success, json = self.client.get(
-            endpoint, params=params, json=body, headers=headers
-        )
+                params[query] = True
+        success, json = self.client.get(endpoint, params=params, headers=headers)
         info_list = json.get("aliases", list())
         aliases = [Alias(**info) for info in info_list]
         return aliases
