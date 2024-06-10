@@ -2,23 +2,45 @@
 CLI application commands
 
 There is usually no need to import and add commands or groups to the
-main Click group manually. The setup script handles that automatically,
-assuming the following.
+main Click group manually. It uses a lazy-loading strategy that locates
+subgroups and subcommands dynamically, as long as they follow these
+rules:
 
-* Every object that needs to be added to the main group is itself a
-  group, not a command. This is because the application is designed
-  to offer arbitrarily-nested commands.
-* Every group which should be added is public, and any groups nested
-  under those are private (i.e., their names begin with an
-  underscore). This allows groups to contain other groups without polluting
-  the top-level group with all the sub-subgroups.
+- They live directly under the `/simplelogincmd/cli/commands/`
+  directory
+- They and the module in which they are defined share a name
+- The module in which they are defined is public (i.e., its name does
+  not start with an underscore).
 
-In other words:
-To create a new command, define it as a public Click group in a module
-in this package. It will be imported and added automatically. If it
-should have subgroups itself, define them as private in the same
-module and add them to one of the module's public groups.
+Overall, the convention for organizing commands is this. Each top-level
+group lives in a public module directly under the
+`/simplelogincmd/cli/commands/` directory. The module and the group
+should have the same name. The group's concrete implementation, if any,
+is defined in a private module in the same location. The group's
+subgroups and subcommands are located in a subdirectory under
+`/simplelogincmd/cli/commands/` that shares the group's name with
+"_commands" appended. As with the top-level group, subgroup/subcommand
+definitions are provided in a public module named after the subgroup/
+subcommand, and implementations reside in private modules at the same
+level. This pattern can repeat as deeply as groups require.
 
-See :mod:`~simplelogincmd.cli.commands.alias` for an example of subgroups with
-nested sub-subgroups.
+Below is a brief visual example, because the above explanation probably
+makes little sense:
+
+- commands/
+
+  - alias_commands/
+
+    - contact_commands/
+
+      - _create.py
+      - create.py
+
+    - _get.py
+    - _list.py
+    - get.py
+    - list.py
+
+  - _alias.py
+  - alias.py
 """
