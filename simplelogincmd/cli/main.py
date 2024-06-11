@@ -13,7 +13,9 @@ from simplelogincmd.cli.lazy_group import LazyGroup, cmd_path
     cmd_path=cmd_path(__file__, "commands"),
     context_settings=const.CONTEXT_SETTINGS,
 )
-@click.version_option()
+@click.version_option(
+    message="%(prog)s v%(version)s",
+)
 def cli():
     """
     \f
