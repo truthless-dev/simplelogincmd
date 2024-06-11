@@ -16,6 +16,7 @@ def _custom(
     cfg = init.cfg()
     sl = init.sl(cfg)
     db = init.db(cfg)
+
     # Get suffix, recommendation, and other info before creating anything.
     success, data = sl.get_alias_options(hostname)
     if not success:
@@ -35,7 +36,14 @@ def _custom(
         if not bypass_confirmation:
             click.confirm("Create a new alias anyway?", abort=True)
 
-    mailbox_ids = {input.resolve_id(db, Mailbox, mb_id) for mb_id in mailboxes}
+    mailbox_ids = set()
+    for mb_id in mailboxes:
+        mailbox = input.resolve_id(db, Mailbox, mb_id)
+        try:
+            mailbox_ids.add(mailbox.id)
+        except AttributeError:
+            mailbox_ids.add(mb_id)
+
     if note == "_EDIT":
         note = input.edit()
 
@@ -83,7 +91,10 @@ def _custom(
     if not success:
         click.echo(obj)
         return False
+
+    # Update local db.
     db.session.upsert(obj)
     db.session.commit()
+
     click.echo(obj.email)
     return True
