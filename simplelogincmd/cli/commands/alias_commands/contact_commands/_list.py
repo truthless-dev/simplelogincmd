@@ -4,7 +4,7 @@ from simplelogincmd.cli import const, util
 from simplelogincmd.database.models import Alias
 
 
-def _list(id, include, exclude):
+def _list(id, include, exclude, header):
     fields = util.output.get_display_fields_from_options(
         const.CONTACT_FIELD_ORDER, include, exclude
     )
@@ -22,4 +22,11 @@ def _list(id, include, exclude):
         db.session.upsert(contact)
     db.session.commit()
     pager_threshold = cfg.get("display.pager-threshold")
-    util.output.display_model_list(contacts, fields, pager_threshold)
+    if header is None:
+        header = cfg.get("display.headers")
+    util.output.display_model_list(
+        contacts,
+        fields,
+        pager_threshold,
+        header,
+    )

@@ -40,8 +40,19 @@ from simplelogincmd.cli import const
     flag_value="disabled",
     help=const.HELP.ALIAS.LIST.OPTION.DISABLED,
 )
-def list(include: str | None, exclude: str | None, query: str | None) -> None:
+@click.option(
+    "--header/--no-header",
+    "header",
+    default=None,
+    help=const.HELP.ALIAS.LIST.OPTION.HEADER,
+)
+def list(
+    include: str | None,
+    exclude: str | None,
+    query: str | None,
+    header: bool | None,
+) -> None:
     """Display aliases in a tabular format"""
     from simplelogincmd.cli.commands.alias_commands._list import _list
 
-    return _list(include, exclude, query)
+    return _list(include, exclude, query, header)

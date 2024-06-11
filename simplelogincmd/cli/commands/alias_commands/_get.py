@@ -4,7 +4,7 @@ from simplelogincmd.cli import const, util
 from simplelogincmd.database.models import Alias
 
 
-def _get(id, include, exclude):
+def _get(id, include, exclude, header):
     fields = util.output.get_display_fields_from_options(
         const.ALIAS_FIELD_ORDER, include, exclude
     )
@@ -20,4 +20,11 @@ def _get(id, include, exclude):
         return None
     db.session.upsert(obj)
     db.session.commit()
-    util.output.display_model_list([obj], fields, pager_threshold=0)
+    if header is None:
+        header = cfg.get("display.headers")
+    util.output.display_model_list(
+        [obj],
+        fields,
+        pager_threshold=0,
+        header=header,
+    )

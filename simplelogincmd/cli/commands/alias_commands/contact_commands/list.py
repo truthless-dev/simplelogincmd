@@ -22,8 +22,19 @@ from simplelogincmd.cli import const
     "--exclude",
     help=const.HELP.ALIAS.CONTACT.LIST.OPTION.EXCLUDE,
 )
-def list(id: str, include: str | None, exclude: str | None) -> None:
+@click.option(
+    "--header/--no-header",
+    "header",
+    default=None,
+    help=const.HELP.ALIAS.CONTACT.LIST.OPTION.HEADER,
+)
+def list(
+    id: str,
+    include: str | None,
+    exclude: str | None,
+    header: bool | None,
+) -> None:
     """List contacts in a tabular format"""
     from simplelogincmd.cli.commands.alias_commands.contact_commands._list import _list
 
-    return _list(id, include, exclude)
+    return _list(id, include, exclude, header)

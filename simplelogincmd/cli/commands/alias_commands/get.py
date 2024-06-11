@@ -21,8 +21,19 @@ from simplelogincmd.cli import const
     "--exclude",
     help=const.HELP.ALIAS.GET.OPTION.EXCLUDE,
 )
-def get(id: str, include: str | None, exclude: str | None) -> None:
+@click.option(
+    "--header/--no-header",
+    "header",
+    default=None,
+    help=const.HELP.ALIAS.GET.OPTION.HEADER,
+)
+def get(
+    id: str,
+    include: str | None,
+    exclude: str | None,
+    header: bool | None,
+) -> None:
     """Display a single alias in a tabular format"""
     from simplelogincmd.cli.commands.alias_commands._get import _get
 
-    return _get(id, include, exclude)
+    return _get(id, include, exclude, header)

@@ -78,6 +78,10 @@ _HELP_MAILBOX_ID = (
     "base, its email address. In the latter case, if more than one "
     "mailbox matches, you will be prompted to choose one."
 )
+_HELP_OPTION_HEADER = (
+    "Whether to show a header above the items. If provided, this "
+    "overrides your `display.headers` config."
+)
 _HELP_OPTION_NOTE = (
     "Attach a note to the item. Setting this switch with"
     "out providing any value will open an editor in which you can enter "
@@ -158,6 +162,7 @@ HELP = NS(
             OPTION=NS(
                 INCLUDE=_HELP_LIST_INCLUDE,
                 EXCLUDE=_HELP_LIST_EXCLUDE,
+                HEADER=_HELP_OPTION_HEADER,
             ),
         ),
         CONTACT=NS(
@@ -182,6 +187,7 @@ HELP = NS(
                 OPTION=NS(
                     INCLUDE=_HELP_LIST_INCLUDE,
                     EXCLUDE=_HELP_LIST_EXCLUDE,
+                    HEADER=_HELP_OPTION_HEADER,
                 ),
             ),
         ),
@@ -228,6 +234,7 @@ HELP = NS(
             OPTION=NS(
                 INCLUDE=_HELP_LIST_INCLUDE,
                 EXCLUDE=_HELP_LIST_EXCLUDE,
+                HEADER=_HELP_OPTION_HEADER,
             ),
         ),
         LIST=NS(
@@ -245,6 +252,7 @@ HELP = NS(
                 PINNED="Get only pinned aliases",
                 ENABLED="Get only enabled aliases",
                 DISABLED="Get only disabled aliases",
+                HEADER=_HELP_OPTION_HEADER,
             ),
         ),
         RANDOM=NS(
@@ -347,6 +355,7 @@ HELP = NS(
             OPTION=NS(
                 INCLUDE=_HELP_LIST_INCLUDE,
                 EXCLUDE=_HELP_LIST_EXCLUDE,
+                HEADER=_HELP_OPTION_HEADER,
             ),
         ),
         UPDATE=NS(

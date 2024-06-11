@@ -19,8 +19,18 @@ from simplelogincmd.cli import const
     "--exclude",
     help=const.HELP.MAILBOX.LIST.OPTION.EXCLUDE,
 )
-def list(include: str, exclude: str) -> None:
+@click.option(
+    "--header/--no-header",
+    "header",
+    default=None,
+    help=const.HELP.MAILBOX.LIST.OPTION.HEADER,
+)
+def list(
+    include: str,
+    exclude: str,
+    header: bool | None,
+) -> None:
     """Display mailboxes in a tabular format"""
     from simplelogincmd.cli.commands.mailbox_commands._list import _list
 
-    return _list(include, exclude)
+    return _list(include, exclude, header)

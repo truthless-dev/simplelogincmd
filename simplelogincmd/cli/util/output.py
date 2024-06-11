@@ -41,7 +41,7 @@ def get_display_fields_from_options(
     return fields
 
 
-def _generate_model_list(models: list, fields: list[str]):
+def _generate_model_list(models: list, fields: list[str], header: bool):
     """
     Generate a table displaying the given fields of each item
 
@@ -50,14 +50,19 @@ def _generate_model_list(models: list, fields: list[str]):
     :type models: list[Object]
     :param fields: The field names to be shown for each item
     :type fields: list[str]
+    :param header: Whether to include a header of field names as the
+        first line
+    :type header: bool
 
     :return: A generator of each line of the table, including a heading
+        if desired
     :rtype: Generator
     """
     if len(models) == 0:
         return
-    header = "|".join(fields)
-    yield f"{header}\n"
+    if header:
+        header = "|".join(fields)
+        yield f"{header}\n"
     for model in models:
         properties = [model.get_string(field) for field in fields]
         entry = "|".join(properties)
@@ -68,6 +73,7 @@ def display_model_list(
     models: list,
     fields: list[str],
     pager_threshold: int,
+    header: bool = True,
 ) -> None:
     """
     Print a simple table detailing each item to stdout
@@ -82,15 +88,19 @@ def display_model_list(
         consists of this many or more entries, including the heading.
         A value of `0` indicates not to use the pager.
     :type use_pager: int
+    :param header: Whether to include a header of field names as the
+        first line, defaults to True
+    :type header: bool
 
     :rtype: None
     """
     count = len(models)
     if count == 0:
         return
-    table = _generate_model_list(models, fields)
-    # +1 to account for the heading.
-    if 0 < pager_threshold <= count + 1:
+    if header:
+        count += 1
+    table = _generate_model_list(models, fields, header)
+    if 0 < pager_threshold <= count:
         click.echo_via_pager(table)
         return
     for entry in table:
