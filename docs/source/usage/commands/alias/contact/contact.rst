@@ -19,3 +19,4 @@ alias contact
    create
    delete
    list
+   toggle

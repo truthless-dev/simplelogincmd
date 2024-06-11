@@ -342,3 +342,35 @@ def resp_contact_delete_failure(url_contact, sl_contact_a, sl_contact_delete_fai
         status=403,
         json=sl_contact_delete_failure,
     )
+
+
+@pytest.fixture
+def resp_contact_enabled(url_contact_toggle, sl_contact_a, sl_contact_enabled):
+    return Response(
+        method="POST",
+        url=url_contact_toggle.format(contact_id=sl_contact_a["id"]),
+        status=200,
+        json=sl_contact_enabled,
+    )
+
+
+@pytest.fixture
+def resp_contact_disabled(url_contact_toggle, sl_contact_a, sl_contact_disabled):
+    return Response(
+        method="POST",
+        url=url_contact_toggle.format(contact_id=sl_contact_a["id"]),
+        status=200,
+        json=sl_contact_disabled,
+    )
+
+
+@pytest.fixture
+def resp_contact_toggle_failure(
+    url_contact_toggle, sl_contact_a, sl_contact_toggle_failure
+):
+    return Response(
+        method="POST",
+        url=url_contact_toggle.format(contact_id=sl_contact_a["id"]),
+        status=403,
+        json=sl_contact_toggle_failure,
+    )
