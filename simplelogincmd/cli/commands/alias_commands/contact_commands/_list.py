@@ -10,17 +10,23 @@ def _list(id, include, exclude, header):
     )
     if len(fields) == 0:
         return
+
     cfg = util.init.cfg()
     sl = util.init.sl(cfg)
     db = util.init.db(cfg)
-    id = util.input.resolve_id(db, Alias, id)
+    if (alias := util.input.resolve_id(db, Alias, id)) is not None:
+        id = alias.id
+
     contacts = sl.get_all_alias_contacts(id)
     if len(contacts) == 0:
         click.echo("No contacts found")
         return
+
+    # Update local db.
     for contact in contacts:
         db.session.upsert(contact)
     db.session.commit()
+
     pager_threshold = cfg.get("display.pager-threshold")
     if header is None:
         header = cfg.get("display.headers")

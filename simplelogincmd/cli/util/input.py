@@ -66,9 +66,8 @@ def resolve_id(db, model_cls, id):
     Call the model classes :meth:`~Object.resolve_identifier` method to
     locate db objects based on the given identifier, which can be any
     value. If multiple results match, ask the user to choose one and
-    return the id of the selected object. If one result matches, return
-    its id directly. If no matches were found, return the id as it was
-    provided.
+    return the selected object. If one result matches, return
+    it directly. If no matches were found, return None.
 
     :param db: The access layer instance to use for the lookup
     :type db: :class:`~simplelogincmd.database.DatabaseAccessLayer`
@@ -79,15 +78,14 @@ def resolve_id(db, model_cls, id):
     :type id: Any, usually int or str, as defined by the model class's
         :meth:`~simplelogincmd.database.models.Object.identifier_query`
 
-    :return: The numeric id of the matched object, or the given id if
-        none matched
-    :rtype: int | type(id)
+    :return: The matched object, or None if none matched
+    :rtype: :class:`~simplelogincmd.database.models.Object` | None
     """
     results = model_cls.resolve_identifier(db.session, id)
     count = len(results)
     if count == 0:
-        return id
+        return None
     if count == 1:
-        return results[0].id
+        return results[0]
     choice = prompt_choice(f"Select {model_cls.__name__}", results)
-    return results[choice].id
+    return results[choice]

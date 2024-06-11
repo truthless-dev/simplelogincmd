@@ -8,15 +8,25 @@ def _delete(id, bypass_confirmation):
     cfg = init.cfg()
     sl = init.sl(cfg)
     db = init.db(cfg)
-    id = input.resolve_id(db, Contact, id)
+    if (contact := input.resolve_id(db, Contact, id)) is not None:
+        id = contact.id
+        name = contact.contact
+    else:
+        name = id
+
     if not bypass_confirmation:
-        contact = db.session.get(Contact, id)
-        msg = f"Delete {contact.contact if contact else id}?"
-        click.confirm(msg, abort=True)
+        click.confirm(f"Delete {name}?", abort=True)
+
     success, msg = sl.delete_contact(id)
     if not success:
         # Clarify the somewhat vague error message
         msg = f"Unknown ID {id}" if msg == "Forbidden" else msg
         click.echo(msg)
         return False
+
+    if contact is not None:
+        # Update local db.
+        db.session.delete(contact)
+        db.session.commit()
+
     return True

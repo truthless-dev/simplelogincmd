@@ -10,14 +10,18 @@ def _activity(id, include, exclude, header):
     )
     if len(fields) == 0:
         return
+
     cfg = util.init.cfg()
     sl = util.init.sl(cfg)
     db = util.init.db(cfg)
-    id = util.input.resolve_id(db, Alias, id)
+    if (alias := util.input.resolve_id(db, Alias, id)) is not None:
+        id = alias.id
+
     activities = sl.get_all_alias_activities(id)
     if len(activities) == 0:
         click.echo("No activities found")
         return
+
     pager_threshold = cfg.get("display.pager-threshold")
     if header is None:
         header = cfg.get("display.headers")
