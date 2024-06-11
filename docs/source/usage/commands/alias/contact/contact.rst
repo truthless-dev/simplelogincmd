@@ -17,4 +17,5 @@ alias contact
 .. toctree::
 
    create
+   delete
    list

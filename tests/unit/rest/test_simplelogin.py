@@ -306,3 +306,20 @@ class TestAliasEndpoints:
         )
         assert success is False
         assert "Please upgrade" in obj
+
+
+class TestContactEndpoints:
+
+    @responses.activate
+    def test_delete_valid(self, sl, sl_contact_a, resp_contact_delete_success):
+        responses.add(resp_contact_delete_success)
+        success, msg = sl.delete_contact(contact_id=sl_contact_a["id"])
+        assert success is True
+        assert msg is None
+
+    @responses.activate
+    def test_delete_invalid(self, sl, sl_contact_a, resp_contact_delete_failure):
+        responses.add(resp_contact_delete_failure)
+        success, msg = sl.delete_contact(contact_id=sl_contact_a["id"])
+        assert success is False
+        assert isinstance(msg, str)

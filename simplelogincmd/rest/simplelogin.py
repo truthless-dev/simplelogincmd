@@ -624,3 +624,21 @@ class SimpleLogin:
         if not success:
             return success, json.get("error", "Failed to create contact")
         return success, Contact(**json)
+
+    def delete_contact(self, contact_id: int) -> tuple[bool, str | None]:
+        """
+        Delete a contact
+
+        See SimpleLogin's documentation for an explanation of the
+        parameters.
+
+        :return: Whether the deletion succeeded, and an optional error
+            message
+        :rtype: tuple[bool, str | None]
+        """
+        endpoint = const.ENDPOINT.CONTACT.format(contact_id=contact_id)
+        headers = self._auth_headers()
+        success, json = self.client.delete(endpoint, headers=headers)
+        if not success:
+            return success, json.get("error", "Failed to delete contact")
+        return success, None

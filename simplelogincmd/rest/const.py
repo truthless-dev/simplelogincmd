@@ -25,6 +25,7 @@ ENDPOINT = NS(
     ALIAS_TOGGLE="/api/aliases/{alias_id}/toggle",
     ALIAS_ACTIVITIES="/api/aliases/{alias_id}/activities",
     ALIAS_CONTACTS="/api/aliases/{alias_id}/contacts",
+    CONTACT="/api/contacts/{contact_id}",
 )
 
 

@@ -322,3 +322,23 @@ def resp_contact_create_unable(
         status=403,
         json=sl_create_contact_unable,
     )
+
+
+@pytest.fixture
+def resp_contact_delete_success(url_contact, sl_contact_a, sl_contact_delete_success):
+    return Response(
+        method="DELETE",
+        url=url_contact.format(contact_id=sl_contact_a["id"]),
+        status=200,
+        json=sl_contact_delete_success,
+    )
+
+
+@pytest.fixture
+def resp_contact_delete_failure(url_contact, sl_contact_a, sl_contact_delete_failure):
+    return Response(
+        method="DELETE",
+        url=url_contact.format(contact_id=sl_contact_a["id"]),
+        status=403,
+        json=sl_contact_delete_failure,
+    )
