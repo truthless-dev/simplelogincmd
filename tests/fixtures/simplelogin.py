@@ -338,3 +338,17 @@ def sl_create_contact_unable():
     return dict(
         error="Please upgrade to create a reverse-alias",
     )
+
+
+@pytest.fixture
+def sl_contact_delete_success():
+    return dict(
+        deleted=True,
+    )
+
+
+@pytest.fixture
+def sl_contact_delete_failure():
+    return dict(
+        error="Forbidden",
+    )

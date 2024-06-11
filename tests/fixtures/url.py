@@ -68,3 +68,8 @@ def url_alias_activities(url_base):
 @pytest.fixture(scope="session")
 def url_alias_contacts(url_base):
     return urljoin(url_base, const.ENDPOINT.ALIAS_CONTACTS)
+
+
+@pytest.fixture(scope="session")
+def url_contact(url_base):
+    return urljoin(url_base, const.ENDPOINT.CONTACT)

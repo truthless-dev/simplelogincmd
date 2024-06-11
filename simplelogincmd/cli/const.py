@@ -73,6 +73,11 @@ _HELP_ALIAS_ID = (
     "base, either its email address or note. In the latter cases, if "
     "more than one alias matches, you will be prompted to choose one."
 )
+_HELP_CONTACT_ID = (
+    "`ID` can be the contact's numeric id or, if you have a local data"
+    "base, its email address. In the latter case, if more than one "
+    "contact matches, you will be prompted to choose one."
+)
 _HELP_MAILBOX_ID = (
     "`ID` can be the mailbox's numeric id or, if you have a local data"
     "base, its email address. In the latter case, if more than one "
@@ -173,6 +178,13 @@ HELP = NS(
                 LONG=f"Add a contact to the alias with the given ID`. {_HELP_ALIAS_ID}",
                 OPTION=NS(
                     EMAIL="The contact's email address",
+                ),
+            ),
+            DELETE=NS(
+                SHORT="Delete a contact",
+                LONG=f"Delete the contact with the given ID. {_HELP_CONTACT_ID}",
+                OPTION=NS(
+                    YES="Bypass the confirmation prompt",
                 ),
             ),
             LIST=NS(
