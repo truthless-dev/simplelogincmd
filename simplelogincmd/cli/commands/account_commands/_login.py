@@ -12,7 +12,7 @@ def _login(email, password):
         click.echo(msg)
         return False
     if sl.is_mfa_waiting():
-        from simplelogincmd.cli.commands.account.mfa import mfa
+        from simplelogincmd.cli.commands.account_commands.mfa import mfa
 
         mfa_key = sl.mfa_key
         mfa_token = click.prompt("OTP", type=int, hide_input=True)
