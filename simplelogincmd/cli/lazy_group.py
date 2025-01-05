@@ -80,7 +80,10 @@ class LazyGroup(click.Group):
         import os
 
         path = os.path.join(self._cmd_path, f"{name}.py")
-        spec = importlib.util.spec_from_file_location(name, path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        try:
+            spec = importlib.util.spec_from_file_location(name, path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+        except FileNotFoundError:
+            return None
         return getattr(module, name)
